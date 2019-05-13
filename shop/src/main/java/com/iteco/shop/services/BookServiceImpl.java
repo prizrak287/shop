@@ -20,23 +20,28 @@ public class BookServiceImpl implements BookService{
         this.booksRepo = booksRepo;
     }
 
+    @Override
     public List<Book> findAllBooks() {
         return booksRepo.findAll();
     }
 
+    @Override
     public List<Book> findBookByName(String name) {
        return booksRepo.findByName(name);
     }
 
+    @Override
     public Book findBook(Integer id) {
         Optional<Book> bookOpt = booksRepo.findById(id);
         return bookOpt.orElse(new Book());
     }
 
+    @Override
     public void saveBook(Book book) {
         booksRepo.save(book);
     }
 
+    @Override
     public void deleteBook(Book book) {
         booksRepo.delete(book);
     }
