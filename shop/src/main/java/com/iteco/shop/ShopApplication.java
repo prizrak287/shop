@@ -1,6 +1,5 @@
 package com.iteco.shop;
 
-import org.springframework.boot.Banner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
@@ -8,9 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 public class ShopApplication {
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(ShopApplication.class)
-				.bannerMode(Banner.Mode.OFF)
-				.run(args);
+		new SpringApplicationBuilder(ShopApplication.class).run(args);
 
 	}
 

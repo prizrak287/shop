@@ -39,6 +39,12 @@ public class Author implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @Column(name = "login")
+    private String login;
+
+    @Column(name = "hash_password")
+    private String hasPassword;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "authors_books",
@@ -81,6 +87,22 @@ public class Author implements Serializable {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getHasPassword() {
+        return hasPassword;
+    }
+
+    public void setHasPassword(String hasPassword) {
+        this.hasPassword = hasPassword;
     }
 
     @Override
