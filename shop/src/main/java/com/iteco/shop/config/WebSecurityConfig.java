@@ -1,5 +1,6 @@
 package com.iteco.shop.config;
 
+import com.iteco.shop.details.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,7 +13,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
 
-    public WebSecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -22,13 +23,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/login", "/signUp").permitAll()
-                    .antMatchers("/**").authenticated()
-                    .and()
+                    .antMatchers("/login", "/signUp", "/**.css").permitAll()
+                    .anyRequest().authenticated()
+                .and()
                 .formLogin()
                     .usernameParameter("login")
-                .defaultSuccessUrl("/")
-                    .loginPage("/login");
+                    .defaultSuccessUrl("/")
+                    .loginPage("/login")
+                .and();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.iteco.shop.config;
+package com.iteco.shop.details;
 
 import com.iteco.shop.repo.UserRepo;
 import org.springframework.security.core.userdetails.UserDetails;

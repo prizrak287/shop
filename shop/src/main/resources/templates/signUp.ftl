@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Log In</title>
-    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-    <link rel="stylesheet" href="/style.css"/>
 </head>
 <body>
 <div class="form-style-2">
     <div class="form-style-2-heading">
         Please Login!
     </div>
-    <form method="post" action="/signUp">
+    <form method="post">
         <label for="firstName">Имя
             <input class="input-field" type="text" id="firstName" name="firstName">
         </label>
