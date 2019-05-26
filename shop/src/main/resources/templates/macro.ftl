@@ -20,9 +20,10 @@
 
 <#macro sidebar>
     <div id="left">
-        <li><a href="http://localhost:8081/">Main</a></li>
-        <li><a href="http://localhost:8081/authors">Authors</a></li>
-        <li><a href="http://localhost:8081/books">Books</a></li>
+        <li><a href="/">Main</a></li>
+        <li><a href="/authors">Authors</a></li>
+        <li><a href="/books">Books</a></li>
+        <li><a href="/logout">Exit</a></li>
     </div>
 </#macro>
 
