@@ -48,7 +48,7 @@ CREATE TABLE users
     login         VARCHAR(32),
     hash_password varchar(256),
     CONSTRAINT pk_users PRIMARY KEY (id),
-    CONSTRAINT unq_users UNIQUE (login)
+    CONSTRAINT unq_users_login UNIQUE (login)
 );
 
 CREATE TABLE authors_books

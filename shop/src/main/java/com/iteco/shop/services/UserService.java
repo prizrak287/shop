@@ -8,6 +8,7 @@ public interface UserService {
     List<User> findAllUsers();
     List<User> findUserByName(String name);
     User findUser(Integer id);
+    User findUserByLogin(String login);
     void saveUser(User user);
     void deleteUser(User user);
 }

@@ -42,6 +42,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findUserByLogin(String login) {
+        Optional<User> userCandidate = userRepo.findOneByLogin(login);
+        if (userCandidate.isPresent()) {
+            return userCandidate.get();
+        } else throw new IllegalArgumentException("User not found");
+    }
+
+    @Override
     public void saveUser(User user) {
         user.setHashPassword(passwordEncoder.encode(user.getHashPassword()));
         userRepo.save(user);

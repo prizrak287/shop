@@ -1,6 +1,7 @@
 package com.iteco.shop.details;
 
-import com.iteco.shop.repo.UserRepo;
+import com.iteco.shop.entities.User;
+import com.iteco.shop.services.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -8,14 +9,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    private final UserRepo repo;
+    private final UserService service;
 
-    public UserDetailsServiceImpl(UserRepo repo) {
-        this.repo = repo;
+    public UserDetailsServiceImpl(UserService service) {
+        this.service = service;
     }
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        return new UserDetailsImpl(repo.findOneByLogin(login).orElseThrow(IllegalArgumentException::new));
+        User user = service.findUserByLogin(login);
+        return new UserDetailsImpl(user);
     }
 }
