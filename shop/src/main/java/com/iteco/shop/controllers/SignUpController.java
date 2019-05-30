@@ -2,12 +2,13 @@ package com.iteco.shop.controllers;
 
 import com.iteco.shop.entities.User;
 import com.iteco.shop.services.UserService;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/signUp")
 public class SignUpController {
     private final UserService service;
@@ -16,14 +17,9 @@ public class SignUpController {
         this.service = service;
     }
 
-    @GetMapping
-    public String getSignUpPage() {
-        return "signUp";
-    }
-
     @PostMapping
-    public String signUp(User user) {
+    public ResponseEntity<Object> signUp(@RequestBody User user) {
      service.saveUser(user);
-     return "redirect:/login";
+     return ResponseEntity.ok().build();
     }
 }

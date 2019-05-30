@@ -1,24 +1,26 @@
 package com.iteco.shop.controllers;
 
 
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import com.iteco.shop.entities.Token;
+import com.iteco.shop.forms.LoginForm;
+import com.iteco.shop.services.TokenService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/login")
 public class LoginController {
-    @GetMapping
-    public String getLogin(@RequestParam(value = "error", required = false) String error, Authentication authentication, Model model) {
-        if (authentication != null) {
-            return "redirect:/";
-        }
-        if (error != null) {
-            model.addAttribute("error", true);
-        }
-        return "login";
+    private TokenService service;
+
+    public LoginController(TokenService service) {
+        this.service = service;
     }
+
+    @PostMapping
+    public ResponseEntity<Token> logIn(@RequestBody LoginForm loginForm) {
+       return ResponseEntity.ok(service.login(loginForm));
+   }
 }

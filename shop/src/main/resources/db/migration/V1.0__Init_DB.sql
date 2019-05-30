@@ -21,6 +21,13 @@ CREATE SEQUENCE users_seq
     START 1
     CACHE 1;
 
+CREATE SEQUENCE tokens_seq
+    INCREMENT 1
+    MINVALUE 1
+    MAXVALUE 2147483648
+    START 1
+    CACHE 1;
+
 
 CREATE TABLE authors
 (
@@ -49,6 +56,15 @@ CREATE TABLE users
     hash_password varchar(256),
     CONSTRAINT pk_users PRIMARY KEY (id),
     CONSTRAINT unq_users_login UNIQUE (login)
+);
+
+CREATE TABLE tokens
+(
+  id INTEGER NOT NULL DEFAULT nextval('tokens_seq'),
+  value VARCHAR(10) NOT NULL,
+  user_id INTEGER NOT NULL,
+  CONSTRAINT pk_tokens PRIMARY KEY (id),
+  CONSTRAINT fk_tokens FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE authors_books

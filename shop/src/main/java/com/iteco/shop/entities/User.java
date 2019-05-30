@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -31,6 +32,9 @@ public class User {
 
     @Column(name = "hash_password")
     private String hashPassword;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     public Integer getId() {
         return id;
