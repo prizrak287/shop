@@ -38,4 +38,12 @@ public class TokenServiceImpl implements TokenService {
         }
         throw new IllegalArgumentException("User not found");
     }
+
+    @Override
+    public Token findOneByValue(String value) {
+        Optional<Token> tokenCandidate = tokenRepo.findOneByValue(value);
+        if (tokenCandidate.isPresent()) {
+            return tokenCandidate.get();
+        } else throw new IllegalArgumentException("Token not found");
+    }
 }

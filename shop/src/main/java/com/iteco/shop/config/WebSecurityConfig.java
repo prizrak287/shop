@@ -1,41 +1,33 @@
 package com.iteco.shop.config;
 
-import com.iteco.shop.details.UserDetailsServiceImpl;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import com.iteco.shop.security.JwtTokenProvider;
+import com.iteco.shop.security.TokenAuthFilter;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-@Configuration
+@ComponentScan("com.iteco.shop")
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
-    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider provider;
+    private final TokenAuthFilter filter;
 
-    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder) {
-        this.userDetailsService = userDetailsService;
-        this.passwordEncoder = passwordEncoder;
+    public WebSecurityConfig(JwtTokenProvider provider, TokenAuthFilter filter) {
+        this.provider = provider;
+        this.filter = filter;
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .addFilterBefore(filter, BasicAuthenticationFilter.class)
+                .antMatcher("/**")
+                .authenticationProvider(provider)
                 .authorizeRequests()
-                    .antMatchers("/login", "/signUp", "/**.css").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                .formLogin()
-                    .usernameParameter("login")
-                    .defaultSuccessUrl("/")
-                    .loginPage("/login");
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+                .anyRequest().authenticated()
+                .antMatchers("/login").permitAll();
+        http.csrf().disable();
     }
 }

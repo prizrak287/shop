@@ -10,5 +10,4 @@ public class ShopApplication {
 		new SpringApplicationBuilder(ShopApplication.class).run(args);
 
 	}
-
 }

@@ -2,14 +2,13 @@ package com.iteco.shop.controllers;
 
 import com.iteco.shop.entities.Author;
 import com.iteco.shop.services.AuthorServiceImpl;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/authors")
 public class AuthorsController {
 
@@ -20,11 +19,10 @@ public class AuthorsController {
     }
 
     @GetMapping
-    public String getAuthors(Model model) {
+    public List<Author> getAuthors() {
         List<Author> authors = authorService.findAllAuthors();
         authors.sort(Comparator.comparing(Author::getName));
-        model.addAttribute("listAuthors", authors);
-        return "authors";
+        return authors;
     }
 
     @GetMapping("/info")

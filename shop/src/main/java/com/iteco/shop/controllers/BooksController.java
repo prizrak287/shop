@@ -2,17 +2,13 @@ package com.iteco.shop.controllers;
 
 import com.iteco.shop.entities.Book;
 import com.iteco.shop.services.BookServiceImpl;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/books")
 public class BooksController {
 
@@ -23,11 +19,10 @@ public class BooksController {
     }
 
     @GetMapping
-    public String getBooks(Model model) {
+    public List<Book> getBooks() {
         List<Book> books = bookService.findAllBooks();
         books.sort(Comparator.comparing(Book::getName));
-        model.addAttribute("listBooks", books);
-        return "books";
+        return books;
     }
 
     @GetMapping("/info")
